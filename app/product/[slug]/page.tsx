@@ -3,6 +3,8 @@ import { groq } from "next-sanity";
 import { urlForImage } from "@/sanity/lib/image";
 import { client } from "@/sanity/lib/client";
 
+import ProductInfo from "@/components/ProductInfo";
+
 interface Props {
   params: {
     slug: string;
@@ -27,22 +29,8 @@ const Page = async ({ params }: Props) => {
         />
       </div>
       <div>
-        <h1>{product.name}</h1>
-        <h2>{product.categories[0]}</h2>
-        <p>
-          MRP: {product.currency}
-          {product.price}
-        </p>
-        <p>incl. of taxes</p>
-        <p>(Also includes all applicable duties)</p>
-        <p>Colors Available:</p>
-        <p>{product.colors.join(", ")}</p>
-        <p>Select Size</p>
-        <p>{product.sizes.join(", ")}</p>
-        <p>{product.description}</p>
-        {/* Add to Cart Button */}
+        <ProductInfo product={product} />
       </div>
-      
     </section>
   );
 };
