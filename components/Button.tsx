@@ -22,10 +22,10 @@ const Button = ({
       {iconURL && (
         <Image
           src={iconURL}
-          width={20}
-          height={20}
+          width={25}
+          height={25}
           alt="arrow right icon"
-          className="ml-2 rounded-full bg-white"
+          className="ml-2 p-1 rounded-full bg-white"
         />
       )}
     </button>
