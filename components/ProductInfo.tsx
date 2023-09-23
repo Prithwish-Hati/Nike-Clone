@@ -1,58 +1,50 @@
 "use client";
 
-import { getSizeName } from "@/uitls";
+import { getSizeName } from "@/utils";
 import { useState } from "react";
-//import { useShoppingCart } from "use-shopping-cart";
+import Button from "./Button";
+import { arrowRight, shoppingBag } from "@/assets/icons";
 
 const ProductInfo = ({ product }: any) => {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
-  //const { addItem, incrementItem, cartDetails } = useShoppingCart();
-  // Check if an item is already in cart
-  //const isInCart = !!cartDetails?.[product._id]; //!! forces the value to be boolean
-
-//   const addToCart = () => {
-//     const item = {
-//       ...product,
-//       product_data: {
-//         size: selectedSize,
-//       },
-//     };
-//     // If item is already in cart, increments the quantity, otherwise adds the new item to cart
-//     isInCart ? incrementItem(item._id) : addItem(item);
-//   };
 
   return (
-    <div>
-      <h1>{product.name}</h1>
+    <div className="font-montserrat">
+      <h1 className="text-3xl font-semibold">{product.name}</h1>
       <h2>{product.categories[0]}</h2>
-      <p>
+
+      <p className="text-xl font-semibold mt-4">
         MRP: {product.currency}
         {product.price}
       </p>
-      <p>incl. of taxes</p>
-      <p>(Also includes all applicable duties)</p>
-      <p>Colors Available:</p>
-      <p>{product.colors.join(", ")}</p>
-      <p>
-        Size: <strong>{getSizeName(selectedSize)}</strong>
+      <p className="text-slate-gray">
+        incl. of taxes
+        <br />
+        (Also includes all applicable duties)
+      </p>
+
+      <p className="mt-4">
+        <strong>Colors Available: </strong>
+        {product.colors.join(" | ")}
+      </p>
+
+      <p className="mt-4 mb-1">
+        <strong> Size: </strong>
+        {getSizeName(selectedSize)}
       </p>
       {product.sizes.map((size: string) => (
         <button
           key={size}
           onClick={() => setSelectedSize(size)}
-          className="rounded-lg px-4 py-2 bg-yellow-500 hover:bg-yellow-700 focus:outline-none focus:ring focus:ring-yellow-200"
+          className="px-4 py-2 mr-2 border-2 border-slate-200 hover:border-slate-900 focus:outline-none focus:ring focus:ring-coral-red"
         >
           {getSizeName(size)}
         </button>
       ))}
-      <p>{product.description}</p>
-      {/* Add to Cart Button */}
-      <button
-        // onClick={addToCart}
-        className="rounded-lg px-4 py-2 bg-yellow-500 hover:bg-yellow-700 focus:outline-none focus:ring focus:ring-yellow-200"
-      >
-        Add to Cart
-      </button>
+
+      <p className="mt-4 mb-8 mr-4 font-medium">{product.description}</p>
+        
+      <Button label="Add to Cart" iconURL={shoppingBag} />
     </div>
   );
 };

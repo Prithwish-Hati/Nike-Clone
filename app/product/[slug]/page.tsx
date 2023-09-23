@@ -18,20 +18,22 @@ const Page = async ({ params }: Props) => {
   // console.log(product);
 
   return (
-    <section>
-      <div>
-        <Image
-          src={urlForImage(product?.images[1]).url()}
-          width={350}
-          height={350}
-          alt={product.name}
-          className="object-contain"
-        />
-      </div>
-      <div>
-        <ProductInfo product={product} />
-      </div>
-    </section>
+    <main className="relative">
+      <section className="padding-x max-container flex gap-10 py-10 max-lg:flex-col">
+        <div className="">
+          <Image
+            src={urlForImage(product?.images[1]).url()}
+            width={700}
+            height={700}
+            alt={product.name}
+            className="object-contain rounded-lg"
+          />
+        </div>
+        <div>
+          <ProductInfo product={product} />
+        </div>
+      </section>
+    </main>
   );
 };
 
