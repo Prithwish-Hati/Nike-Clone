@@ -12,9 +12,9 @@ export default async function Home() {
       <section className="xl:padding-l wide:padding-r padding-b">
         <Hero />
       </section>
-      <section className="padding">
+      {/* <section className="padding">
         <PopularProducts />
-      </section>
+      </section> */}
       <section className="padding">
         <SuperQuality />
       </section>

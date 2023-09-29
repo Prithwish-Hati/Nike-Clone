@@ -7,9 +7,13 @@ import { shoes, statistics } from "@/constants";
 import { useState } from "react";
 import { bigShoe1 } from "@/assets/images";
 import ShoeCard from "../cards/ShoeCard";
+import { useRouter } from "next/navigation";
+
 
 const Hero = () => {
   const [bigShoeImg, setBigShoeImg] = useState(bigShoe1);
+  const router = useRouter();
+
   return (
     <section
       id="home"
@@ -32,7 +36,7 @@ const Hero = () => {
           your active life.
         </p>
 
-        <Button label="Shop now" iconURL={arrowRight} />
+        <Button label="Shop now" iconURL={arrowRight} handleClick={() => router.push('/store')}/>
 
         <div className="flex justify-start items-start flex-wrap w-full mt-20 gap-16">
           {statistics.map((stat, index) => (
