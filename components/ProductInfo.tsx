@@ -1,12 +1,15 @@
 "use client";
 
+import Image from "next/image";
 import { getSizeName } from "@/utils";
 import { useState } from "react";
 import Button from "./Button";
-import { arrowRight, shoppingBag } from "@/assets/icons";
+import { minus, plus, shoppingBag } from "@/assets/icons";
+import { useStateContext } from "@/context/StateContext";
 
 const ProductInfo = ({ product }: any) => {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0]);
+  const { decQty, incQty, qty, onAdd } = useStateContext();
 
   return (
     <div className="font-montserrat">
@@ -43,8 +46,36 @@ const ProductInfo = ({ product }: any) => {
       ))}
 
       <p className="mt-4 mb-8 mr-4 font-medium">{product.description}</p>
-        
-      <Button label="Add to Cart" iconURL={shoppingBag} />
+
+      {/* Quantity of Items */}
+      <div className="flex items-center mb-5">
+        <strong>Quantity:</strong>
+        <span className=" ml-2 border-2 px-3 py-2 border-slate-200">
+          <Image
+            src={minus}
+            width={16}
+            height={16}
+            alt="minus-btn"
+            onClick={decQty}
+            className="cursor-pointer"
+          />
+        </span>
+
+        <span className="border-y-2 px-3 py-1 border-slate-200">{qty}</span>
+        <span className="border-2 px-3 py-2 border-slate-200">
+          <Image
+            onClick={incQty}
+            src={plus}
+            width={16}
+            height={16}
+            alt="plus-btn"
+            className="cursor-pointer ml-1"
+          />
+        </span>
+      </div>
+
+      
+      <Button label="Add to Cart" iconURL={shoppingBag} handleClick={() => onAdd(product, qty)} />
     </div>
   );
 };

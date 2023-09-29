@@ -20,7 +20,7 @@ const Page = async ({ params }: Props) => {
   return (
     <main className="relative">
       <section className="padding-x max-container flex gap-10 py-10 max-lg:flex-col">
-        <div className="">
+        <div>
           <Image
             src={urlForImage(product?.images[1]).url()}
             width={700}
