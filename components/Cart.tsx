@@ -3,20 +3,34 @@
 import { useRef } from "react";
 import toast from "react-hot-toast";
 import Image from "next/image";
+import Link from "next/link";
 
 import { useStateContext } from "@/context/StateContext";
-import { chevronLeft, shoppingBag, shoppingCart } from "@/assets/icons";
-import Link from "next/link";
+import {
+  chevronLeft,
+  minus,
+  plus,
+  removeItem,
+  shoppingBag,
+  shoppingCart,
+} from "@/assets/icons";
+
 import Button from "./Button";
 import { urlForImage } from "@/sanity/lib/image";
 
 const Cart = () => {
   const cartRef = useRef();
-  const { totalPrice, totalQuantities, cartItems, setShowCart } =
-    useStateContext();
+  const {
+    totalPrice,
+    totalQuantities,
+    cartItems,
+    setShowCart,
+    toggleCartItemQuanitity,
+    onRemove
+  } = useStateContext();
 
   return (
-    <div ref={cartRef} className=" fixed right-0 top-0 z-50 bg-slate-100 ">
+    <div ref={cartRef} className=" fixed right-0 top-0 z-50 bg-slate-100">
       <div className="h-screen w-[600px] py-10 px-3">
         <button
           type="button"
@@ -65,10 +79,60 @@ const Cart = () => {
                     {item.price}
                   </h4>
                   <p className="mt-1">Quanity: {item.quantity}</p>
+                  <div className="flex justify-between">
+                    <div className="flex items-center mt-4">
+                      <span className="border-2 px-3 py-2 border-slate-200">
+                        <Image
+                          src={minus}
+                          width={16}
+                          height={16}
+                          alt="minus-btn"
+                          onClick={() =>
+                            toggleCartItemQuanitity(item._id, "dec")
+                          }
+                          className="cursor-pointer"
+                        />
+                      </span>
+
+                      <span className="border-y-2 px-3 py-1 border-slate-200">
+                        {item.quantity}
+                      </span>
+                      <span className="border-2 px-3 py-2 border-slate-200">
+                        <Image
+                          onClick={() =>
+                            toggleCartItemQuanitity(item._id, "inc")
+                          }
+                          src={plus}
+                          width={16}
+                          height={16}
+                          alt="plus-btn"
+                          className="cursor-pointer ml-1"
+                        />
+                      </span>
+                    </div>
+                    <button type="button" className="mt-3" onClick={() => onRemove(item)}>
+                      <Image
+                        src={removeItem}
+                        width={25}
+                        height={25}
+                        alt="remove-item"
+                      />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
         </div>
+        {cartItems.length >= 1 && (
+          <div>
+            <div className="flex justify-between text-xl font-bold px-5 my-5">
+              <h3>Subtotal:</h3>
+              <h3>₹{totalPrice}</h3>
+            </div>
+
+            <Button label="Pay with Stripe" fullWidth />
+          </div>
+        )}
       </div>
     </div>
   );
