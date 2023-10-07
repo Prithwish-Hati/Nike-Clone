@@ -15,6 +15,7 @@ import plus from "./plus.svg";
 import minus from "./minus.svg";
 import leftArrow from "./left-arrow.svg";
 import shoppingCart from "./shopping-cart.svg";
+import removeItem from "./remove-item.svg";
 
 export {
   arrowRight,
@@ -34,4 +35,5 @@ export {
   minus,
   leftArrow,
   shoppingCart,
+  removeItem,
 };
