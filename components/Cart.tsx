@@ -17,6 +17,7 @@ import {
 
 import Button from "./Button";
 import { urlForImage } from "@/sanity/lib/image";
+import getStripe from "@/lib/getStripe";
 
 const Cart = () => {
   const cartRef = useRef();
@@ -26,11 +27,34 @@ const Cart = () => {
     cartItems,
     setShowCart,
     toggleCartItemQuanitity,
-    onRemove
+    onRemove,
   } = useStateContext();
 
+  const handleCheckout = async () => {
+    const stripe = await getStripe();
+
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Request-Method": "POST",
+      },
+      body: JSON.stringify(cartItems),
+    });
+    console.log(response)
+
+    if (response.status === 500) return;
+
+    const data = await response;
+    console.log(data)
+
+    toast.loading("Redirecting...");
+
+    stripe.redirectToCheckout({ sessionId: data.id });
+  };
+
   return (
-    <div ref={cartRef} className=" fixed right-0 top-0 z-50 bg-slate-100">
+    <div className=" fixed right-0 top-0 z-50 bg-slate-100">
       <div className="h-screen w-[600px] py-10 px-3">
         <button
           type="button"
@@ -110,7 +134,11 @@ const Cart = () => {
                         />
                       </span>
                     </div>
-                    <button type="button" className="mt-3" onClick={() => onRemove(item)}>
+                    <button
+                      type="button"
+                      className="mt-3"
+                      onClick={() => onRemove(item)}
+                    >
                       <Image
                         src={removeItem}
                         width={25}
@@ -130,7 +158,11 @@ const Cart = () => {
               <h3>₹{totalPrice}</h3>
             </div>
 
-            <Button label="Pay with Stripe" fullWidth />
+            <Button
+              label="Pay with Stripe"
+              fullWidth
+              handleClick={handleCheckout}
+            />
           </div>
         )}
       </div>
